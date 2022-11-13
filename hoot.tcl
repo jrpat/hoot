@@ -11,8 +11,6 @@
 #                  ``::::''               
 #
 
-set FILE {}
-
 proc K {x {y {}}} { set x }
 proc first {lst} { lindex $lst 0 }
 proc last {lst} { lindex $lst end }
@@ -24,18 +22,18 @@ proc str/rest {s} { string range $s 1 end }
 proc slurp {p} { K [read [set f [open $p r]]] [close $f] }
 proc iif {cond thn {els {}}} { if $cond {K $thn} {K $els} }
 
-proc . {args} { K "\\" [eval "$args"] }
+proc . {args} { K "\30" [uplevel 1 $args] }
 
 proc render {txt} {
   set txt [regsub -all {([^$])\[} $txt {\1\[}]    ;#   [xxx]  → \[xxx]
   set txt [regsub -all {\\\$\[} $txt {$\[}]       ;# \$[xxx]  → $\[xxx]
-  set txt [regsub -all {([^\\])\$\[} $txt {\1[}]  ;#  $[xxx]  → [xxx]
+  set txt [regsub -all {([^\\]?)\$\[} $txt {\1[}] ;#  $[xxx]  → [xxx]
   set txt [regsub -all {\[\.(\S)} $txt {[. \1}]   ;#   [.xxx] → [. xxx]
-  regsub -all {\\\n} [subst $txt] {}
+  regsub -all "\30\\n?" [subst $txt] {}
 }
 
 proc renderfile {path} {
-  if {![file exists $path]} {throw ENOENT "File $path does not exist"}
+  if {![file exists $path]} {throw 2 "File $path does not exist"}
   set prev $::FILE
   set ::FILE $path
   K [render [slurp $path]] [set ::FILE $prev]
@@ -46,10 +44,11 @@ proc include {path} {
     ./*  {set path "[file dirname $::FILE]/$path"}
     ../* {set path "[file dirname [file dirname $::FILE]]/$path"}
   }
-  string cat [renderfile "$path"] "\\"
+  string cat [renderfile "$path"] "\30"
 }
 
 proc template {n ps txt} {
-  K "\\" [eval "proc $n {$ps} {render \"$txt\"}"]
+  . eval "proc $n {$ps} {subst {$txt}}"
 }
 
+set FILE {}
