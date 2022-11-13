@@ -24,10 +24,13 @@ proc str/rest {s} { string range $s 1 end }
 proc slurp {p} { K [read [set f [open $p r]]] [close $f] }
 proc iif {cond thn {els {}}} { if $cond {K $thn} {K $els} }
 
+proc . {args} { K "\\" [eval "$args"] }
+
 proc render {txt} {
-  set txt [regsub -all {([^$])\[} $txt {\1\[}]    ;#   [...]  →  literal
-  set txt [regsub -all {\\\$\[} $txt {$\[}]       ;# \$[...]  → literal
-  set txt [regsub -all {([^\\])\$\[} $txt {\1[}]  ;#  $[...]  →  code
+  set txt [regsub -all {([^$])\[} $txt {\1\[}]    ;#   [xxx]  → \[xxx]
+  set txt [regsub -all {\\\$\[} $txt {$\[}]       ;# \$[xxx]  → $\[xxx]
+  set txt [regsub -all {([^\\])\$\[} $txt {\1[}]  ;#  $[xxx]  → [xxx]
+  set txt [regsub -all {\[\.(\S)} $txt {[. \1}]   ;#   [.xxx] → [. xxx]
   regsub -all {\\\n} [subst $txt] {}
 }
 
@@ -38,7 +41,7 @@ proc renderfile {path} {
   K [render [slurp $path]] [set ::FILE $prev]
 }
 
-proc .include {path} {
+proc include {path} {
   switch -glob $path {
     ./*  {set path "[file dirname $::FILE]/$path"}
     ../* {set path "[file dirname [file dirname $::FILE]]/$path"}
@@ -46,9 +49,7 @@ proc .include {path} {
   string cat [renderfile "$path"] "\\"
 }
 
-proc .template {n ps txt} {
+proc template {n ps txt} {
   K "\\" [eval "proc $n {$ps} {render \"$txt\"}"]
 }
-
-proc . {args} { K "\\" [eval "$args"] }
 
