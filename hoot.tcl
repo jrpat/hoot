@@ -40,9 +40,8 @@ proc renderfile {path} {
 }
 
 proc include {path} {
-  switch -glob $path {
-    ./*  {set path "[file dirname $::FILE]/$path"}
-    ../* {set path "[file dirname [file dirname $::FILE]]/$path"}
+  if {[regexp {^\.\.?/.+} $path]} {
+    set path "[file dirname $::FILE]/$path"
   }
   string cat [renderfile "$path"] "\30"
 }
