@@ -1,4 +1,4 @@
-*
+/*
 
 !.gitignore
 
@@ -6,4 +6,5 @@
 !README
 
 !hoot.tcl
+!test/
 
