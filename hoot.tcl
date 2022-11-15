@@ -1,14 +1,11 @@
+# This file is part of Hoot: A Tcl-powered text preprocessor.
+# Copyright (C) 2022 Juan Patten. MIT License (see LICENSE).
+
 #
-#   ,,,,  ,,,,                   .;;      
-#    ;;    ;;   ,:::,    ,:::,  ::::::    
-#    ;;::::;;  ;: . ::  ;: . ::   ::      
-#    ;;    ;;  ::   :;  ::   :;   :: .    
-#   ,;;,  ,;;,  ',,,'    ',,,'    ;;:'    
-#                                         
-#               .:'        `:.            
-#                :          :             
-#                `:.      .:'             
-#                  ``::::''               
+#    ,_,  
+#   (o,o)   Hoot: A Tcl-based
+#   {`"'}   text preprocessor
+#   -"-"-
 #
 
 proc K {x {y {}}} { set x }

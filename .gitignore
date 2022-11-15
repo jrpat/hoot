@@ -2,10 +2,13 @@
 
 !.gitignore
 
+!Makefile
 !LICENSE
 !README
 
 !hoot.tcl
+!main.c
+
 !test/
 
 !jimtcl/
