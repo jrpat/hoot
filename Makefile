@@ -14,8 +14,8 @@ jimlib := jimtcl/libjim.a
 hoot: main.c hoot.h $(jimlib) Makefile
 	$(CC) $< -o $@ $(CFLAGS)
 
-hoot.h: hoot.tcl
-	xxd -i $< $@
+hoot.h: hoot.tcl Makefile
+	@printf "const char hoot_tcl[] = {\n$$(tail -n +3 $< | xxd -i)\n};\n" > $@
 
 $(jimlib): jimtcl/configure
 	cd jimtcl \
@@ -25,6 +25,10 @@ $(jimlib): jimtcl/configure
 
 jimtcl/configure:
 	git submodule init
+
+
+test: $(jimlib)
+	@jimtcl/jimsh t/test.tcl && echo PASS || echo FAIL
 
 clean:
 	rm -f hoot hoot.h

@@ -1,4 +1,4 @@
-## A Visit from Charlie
+# A Visit from Charlie
 
 Here comes my dog, Charlie.
 
@@ -9,5 +9,7 @@ Then he comes over for some pats on the head
 and a chin scratch. Then it's time to go.
 
 "So long, Charlie!"
+
 ---
 
+*Charlie has left the building*
