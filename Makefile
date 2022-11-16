@@ -8,23 +8,28 @@ CFLAGS += -fsanitize=undefined
 CFLAGS += -fstrict-aliasing -Wstrict-aliasing=2
 CFLAGS += -I./jimtcl -L./jimtcl -ljim
 
+prefix := /usr/local
+
 jimlib := jimtcl/libjim.a
 
 
 hoot: main.c hoot.h $(jimlib) Makefile
-	$(CC) $< -o $@ $(CFLAGS)
+	@echo Building hoot
+	@$(CC) $< -o $@ $(CFLAGS)
 
 hoot.h: hoot.tcl Makefile
 	@printf "const char hoot_tcl[] = {\n$$(tail -n +3 $< | xxd -i)\n};\n" > $@
 
 $(jimlib): jimtcl/configure
-	cd jimtcl \
+	@echo Building jimtcl
+	@cd jimtcl \
 		&& ./configure --utf8 --disable-lineedit --math \
 		               --with-ext="array,file,glob,interp,regexp" \
-		&& make
+									 >/dev/null \
+		&& make >/dev/null 2>&1
 
 jimtcl/configure:
-	git submodule init
+	@git submodule init
 
 
 test: $(jimlib)
@@ -32,3 +37,8 @@ test: $(jimlib)
 
 clean:
 	rm -f hoot hoot.h
+
+
+install: hoot
+	@echo Installing hoot to $(prefix)/bin
+	@install $< $(prefix)/bin
