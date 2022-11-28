@@ -18,10 +18,10 @@
 
 const char *usage =
   "Usage: \n"
-  "  hoot -       Process input from stdin\n"
-  "  hoot <path>  Process file at <path>\n"
-  "  hoot -tcl    Output Hoot Tcl code\n"
-  "  hoot -h      Print this message\n"
+  "  hoot -           Process input from stdin\n"
+  "  hoot <path>      Process file at <path>\n"
+  "  hoot -t/--tcl    Output Hoot Tcl code\n"
+  "  hoot -h/--help   Print this message\n"
 ;
 
 Jim_Interp *jim;
