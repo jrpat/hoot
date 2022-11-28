@@ -7,6 +7,7 @@ CFLAGS += -Wall -Wextra -Werror -pedantic
 CFLAGS += -fsanitize=undefined
 CFLAGS += -fstrict-aliasing -Wstrict-aliasing=2
 CFLAGS += -I./jimtcl -L./jimtcl -ljim
+CFLAGS += -lm
 
 prefix := /usr/local
 
@@ -18,7 +19,7 @@ hoot: main.c hoot.h $(jimlib) Makefile
 	@$(CC) $< -o $@ $(CFLAGS)
 
 hoot.h: hoot.tcl Makefile
-	@printf "const char hoot_tcl[] = {\n$$(tail -n +3 $< | xxd -i)\n};\n" > $@
+	@printf "const char hoot_tcl[] = {\n$$(tail -n +3 $< | xxd -i), 0x00\n};\n" > $@
 
 $(jimlib): jimtcl/configure
 	@echo Building jimtcl
