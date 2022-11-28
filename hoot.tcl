@@ -25,7 +25,7 @@ proc render {txt} {
   set txt [regsub -all {\\\$\[} $txt {$\[}]       ;# \$[xxx]  → $\[xxx]
   set txt [regsub -all {([^\\]?)\$\[} $txt {\1[}] ;#  $[xxx]  → [xxx]
   set txt [regsub -all {\[\.(\S)} $txt {[. \1}]   ;#   [.xxx] → [. xxx]
-  regsub -all "\30\\n?" [subst $txt] {}
+  regsub -all "\30\\n?" [uplevel #0 "subst {$txt}"] {}
 }
 
 proc renderfile {path} {
