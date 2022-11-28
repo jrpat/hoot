@@ -29,7 +29,7 @@ $(jimlib): jimtcl/configure
 		&& make >/dev/null 2>&1
 
 jimtcl/configure:
-	@git submodule init
+	@git submodule update --init
 
 
 test: $(jimlib)
