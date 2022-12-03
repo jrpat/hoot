@@ -20,11 +20,14 @@ proc iif {cond thn {els {}}} { if $cond {K $thn} {K $els} }
 proc . {args} { K "\30" [uplevel 1 $args] }
 
 proc render {txt} {
-  set txt [regsub -all {\\} $txt {\\\\}]          ;#   \      → \\ 
-  set txt [regsub -all {([^$])\[} $txt {\1\[}]    ;#   [xxx]  → \[xxx]
-  set txt [regsub -all {\\\$\[} $txt {$\[}]       ;# \$[xxx]  → $\[xxx]
-  set txt [regsub -all {([^\\]?)\$\[} $txt {\1[}] ;#  $[xxx]  → [xxx]
-  set txt [regsub -all {\[\.(\S)} $txt {[. \1}]   ;#   [.xxx] → [. xxx]
+  set txt [string map {"\\" {\\}} $txt]
+  set txt [string map {
+    {\\$[}  {\$\[}
+    {\\$}   {\$}
+    {$[set} {[. set}
+    {$[.}   {[. }
+    {$[}    {[}
+  } $txt]
   regsub -all "\30\\n?" [uplevel #0 "subst {$txt}"] {}
 }
 
