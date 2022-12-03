@@ -1,6 +1,6 @@
 syn region hootCode start=/\$\[/ end=/\]/ skip=/\\\]/ containedin=hootCode
 
-syn match hootVar /\v\$\k+/ containedin=hootCode
+syn match hootVar /\v\$\{?\k+\}?/ containedin=hootCode
 syn region hootTcl start=/[^$]\[/ end=/\]/ skip=/\\\]/ contained containedin=hootCode
 syn region  hootComment start="^\s*\#" skip="\\$" end="$" contained containedin=hootCode
 syn region  hootComment	start=/;\s*\#/hs=s+1 skip="\\$" end="$" contained containedin=hootCode
