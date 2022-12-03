@@ -1,4 +1,4 @@
-syn region hootCode start=/\$\[/ end=/\]/ skip=/\\\]/
+syn region hootCode start=/\$\[/ end=/\]/ skip=/\\\]/ containedin=hootCode
 
 syn match hootVar /\v\$\k+/ containedin=hootCode
 syn region hootTcl start=/[^$]\[/ end=/\]/ skip=/\\\]/ contained containedin=hootCode
