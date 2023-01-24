@@ -1,5 +1,5 @@
 $[include t/subdir/other-templates.hoot.md]
-$[.set dogname \
+$[set dogname \
 Charlie]
 # A Visit from $dogname
 
@@ -13,7 +13,7 @@ and a chin scratch. Then it's time to go.
 
 $[solong \
 $dogname]
-$[.set a 1]$[.set b 2]
+$[set a 1]    $[set b 2]
 
 ---
 

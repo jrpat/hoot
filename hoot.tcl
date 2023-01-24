@@ -20,15 +20,17 @@ proc iif {cond thn {els {}}} { if $cond {K $thn} {K $els} }
 proc . {args} { K "\30" [uplevel 1 $args] }
 
 proc render {txt} {
-  set txt [string map {"\\" {\\}} $txt]
   set txt [string map {
-    {\\$[}  {\$\[}
-    {\\$}   {\$}
+    {\$[}   {$\[}
+    {$\[}   {$\[}
     {$[set} {[. set}
     {$[.}   {[. }
     {$[}    {[}
+    {[}     {\[}
+    {$0} {\$0}  {$1} {\$1}  {$2} {\$2}  {$3} {\$3}  {$4} {\$4}
+    {$5} {\$5}  {$6} {\$6}  {$7} {\$7}  {$8} {\$8}  {$9} {\$9}
   } $txt]
-  regsub -all "\30\\n?" [uplevel #0 "subst {$txt}"] {}
+  regsub -all "\30\[ \t]*\\r?\\n?" [uplevel #0 "subst {$txt}"] {}
 }
 
 proc renderfile {path} {

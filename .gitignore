@@ -9,8 +9,14 @@
 !hoot.tcl
 !main.c
 
-!t/
-!extra/
+!t/test.tcl
+!t/output.md
+!t/input.hoot.md
+!t/templates.hoot.md
+!t/subdir/other-templates.hoot.md
+
+!extra/hoot.vim/ftdetect/hoot.vim
+!extra/hoot.vim/syntax/hoot.vim
 
 !jimtcl/
 
