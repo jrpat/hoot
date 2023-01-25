@@ -10,6 +10,11 @@ and a chin scratch. Then it's time to go.
 
 "So long, Charlie!"
 
+...
+*Charlie has left the building*
+
 ---
 
-*Charlie has left the building*
+$[this is code]
+$[this is also code]
+The price is $123

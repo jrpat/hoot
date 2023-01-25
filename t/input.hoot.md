@@ -1,5 +1,5 @@
 $[include t/subdir/other-templates.hoot.md]
-$[set dogname \
+   $[set dogname \
 Charlie]
 # A Visit from $dogname
 
@@ -15,6 +15,11 @@ $[solong \
 $dogname]
 $[set a 1]    $[set b 2]
 
+...$[set place building]
+*Charlie has left the $place*
+
 ---
 
-*Charlie has left the building*
+\$[this is code]
+$\[this is also code]
+The price is $123

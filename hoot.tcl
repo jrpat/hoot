@@ -30,7 +30,8 @@ proc render {txt} {
     {$0} {\$0}  {$1} {\$1}  {$2} {\$2}  {$3} {\$3}  {$4} {\$4}
     {$5} {\$5}  {$6} {\$6}  {$7} {\$7}  {$8} {\$8}  {$9} {\$9}
   } $txt]
-  regsub -all "\30\[ \t]*\\r?\\n?" [uplevel #0 "subst {$txt}"] {}
+  set txt [uplevel #0 "subst {$txt}"]
+  regsub -all -line "^\\s*\30\[ \t]*\r?\n?|\30\[ \t]*" $txt {}
 }
 
 proc renderfile {path} {
