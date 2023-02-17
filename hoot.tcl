@@ -50,6 +50,8 @@ proc include {path} {
 }
 
 proc template {n ps txt} {
+  set trim [string match "\[\r\n\]" [str/first $txt]]
+  if $trim {set txt [string trim $txt]}
   . eval "proc $n {$ps} {subst {$txt}}"
 }
 
