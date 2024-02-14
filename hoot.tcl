@@ -26,6 +26,7 @@ proc render {txt} {
     {$\[}   {$\[}
     {$[set} {[. set}
     {$[.}   {[. }
+    {$[>}   {[include }
     {$[}    {[}
     {[}     {\[}
     {$0} {\$0}  {$1} {\$1}  {$2} {\$2}  {$3} {\$3}  {$4} {\$4}
@@ -35,18 +36,20 @@ proc render {txt} {
   regsub -all -line "^\\s*\30\[ \t]*\r?\n?|\30\[ \t]*" $txt {}
 }
 
-proc renderfile {path} {
+proc renderfile {path {vars {}}} {
   if {![file exists $path]} {throw 2 "File $path does not exist\n"}
   set f $::FILE
   set ::FILE $path
-  K [render [slurp $path]] [set ::FILE $f]
+  set v [join [lmap {a b} $vars { K "\$\[set $a {$b}]" }] "\n"]
+  K [render "$v\n[slurp $path]"] [set ::FILE $f]
 }
 
-proc include {path} {
+proc include {path {vars {}}} {
+  set path [string trim $path]
   if {[regexp {^\.\.?/.+} $path]} {
     set path "[file dirname $::FILE]/$path"
   }
-  string cat [renderfile "$path"] "\30"
+  string cat [renderfile "$path" [string trim $vars]] "\30"
 }
 
 proc template {n ps txt} {
