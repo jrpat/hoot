@@ -27,7 +27,7 @@ $(jimlib): jimtcl/configure
 		&& ./configure --minimal \
 							     --utf8 --disable-lineedit --math \
 		               --with-ext="array,file,glob,interp,regexp" \
-									 --without-ext="aio,eventloop,history,oo,package,signal,syslog,tree" \
+									 --without-ext="aio,eventloop,history,oo,package,signal,syslog,tree,zlib" \
 									 >/dev/null \
 		&& make >/dev/null 2>&1
 
