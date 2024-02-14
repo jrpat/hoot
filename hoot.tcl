@@ -24,9 +24,9 @@ proc render {txt} {
   set txt [string map {
     {\$[}   {$\[}
     {$\[}   {$\[}
+    {$[>}   {[include }
     {$[set} {[. set}
     {$[.}   {[. }
-    {$[>}   {[include }
     {$[}    {[}
     {[}     {\[}
     {$0} {\$0}  {$1} {\$1}  {$2} {\$2}  {$3} {\$3}  {$4} {\$4}
@@ -41,7 +41,7 @@ proc renderfile {path {vars {}}} {
   set f $::FILE
   set ::FILE $path
   set v [join [lmap {a b} $vars { K "\$\[set $a {$b}]" }] "\n"]
-  K [render "$v\n[slurp $path]"] [set ::FILE $f]
+  K [render "$v\30\n[slurp $path]"] [set ::FILE $f]
 }
 
 proc include {path {vars {}}} {
