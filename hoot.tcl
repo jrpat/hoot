@@ -16,7 +16,7 @@ proc str/first {s} { string index $s 0 }
 proc str/last {s} { string index $s end }
 proc str/rest {s} { string range $s 1 end }
 proc slurp {p} { K [read [set f [open $p r]]] [close $f] }
-proc iif {cond thn {els {}}} { if $cond {K $thn} {K $els} }
+proc = {val _ cond} { uplevel 1 "if {$cond} {K {$val}}" }
 
 proc . {args} { K "\30" [uplevel 1 $args] }
 
