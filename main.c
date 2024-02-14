@@ -27,7 +27,7 @@ const char *usage =
 Jim_Interp *jim;
 
 
-void render_stdin() {
+void render_stdin(void) {
   if (!OK( Jim_Eval(jim, "stdin read") ))
     FAIL("Error reading input: %s\n", RESULT());
 
