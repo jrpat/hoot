@@ -33,7 +33,8 @@ proc render {txt} {
     {$5} {\$5}  {$6} {\$6}  {$7} {\$7}  {$8} {\$8}  {$9} {\$9}
   } $txt]
   set txt [uplevel #0 "subst {$txt}"]
-  regsub -all -line "^\\s*\30\[ \t]*\r?\n?|\30\[ \t]*" $txt {}
+  set txt [regsub -all -line "^\\s*\30\[ \t\30]*$\r?\n?" $txt {}]
+  string map {"\30" {}} $txt
 }
 
 proc renderfile {path {vars {}}} {
@@ -41,7 +42,7 @@ proc renderfile {path {vars {}}} {
   set f $::FILE
   set ::FILE $path
   set v [join [lmap {a b} $vars { K "\$\[set $a {$b}]" }] "\n"]
-  K [render "$v\30\n[slurp $path]"] [set ::FILE $f]
+  K [render "${v}\30\n[slurp $path]"] [set ::FILE $f]
 }
 
 proc include {path {vars {}}} {

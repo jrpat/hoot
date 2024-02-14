@@ -4,6 +4,7 @@ Charlie]
 # A Visit from $dogname
 
 Here comes my dog, $dogname.
+$[set foo bar]
 
 $[greet $dogname]
 
