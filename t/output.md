@@ -15,6 +15,15 @@ and a chin scratch. Then it's time to go.
 
 ---
 
+What a string!
+What a conditional string!
+xx
+
 $[this is code]
 $[this is also code]
 The price is $123
+
+This is a multiline declaration
+
+Here is myblock
+It is multiple lines

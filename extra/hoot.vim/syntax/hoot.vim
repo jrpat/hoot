@@ -1,4 +1,5 @@
-syn region hootCode start=/\$\[/ end=/\]/ skip=/\\\]/ containedin=ALL
+syn region hootCode start=/\$\[[^~]/ end=/\]/ skip=/\\\]/ containedin=ALL
+syn region hootComment start=/\$\[\~/ end=/\]/ skip=/\\\]/ containedin=ALL
 
 syn match hootVar /\v\$\w+/ containedin=ALL
 syn match hootVar /\v\$\{\w+\}/ containedin=ALL
