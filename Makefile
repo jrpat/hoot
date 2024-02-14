@@ -24,8 +24,10 @@ hoot.h: hoot.tcl Makefile
 $(jimlib): jimtcl/configure
 	@echo Building jimtcl
 	@cd jimtcl \
-		&& ./configure --utf8 --disable-lineedit --math \
+		&& ./configure --minimal \
+							     --utf8 --disable-lineedit --math \
 		               --with-ext="array,file,glob,interp,regexp" \
+									 --without-ext="aio,eventloop,history,oo,package,signal,syslog,tree" \
 									 >/dev/null \
 		&& make >/dev/null 2>&1
 
