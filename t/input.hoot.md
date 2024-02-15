@@ -34,6 +34,9 @@ $[= "What a conditional string!" if {$place eq "building"}]
 $[= "This will not render" if {$place eq "foobar"}]
 $[= "Also will not render" if {$place eq "foobar"}]xx
 
+$[set onechar "x"]
+$[or $[str/rest $onechar] "not-blank"]
+
 \$[this is code]
 $\[this is also code]
 The price is $123

@@ -19,6 +19,8 @@ What a string!
 What a conditional string!
 xx
 
+not-blank
+
 $[this is code]
 $[this is also code]
 The price is $123
