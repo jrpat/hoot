@@ -63,3 +63,7 @@ proc template {n ps txt} {
 }
 
 set FILE {}
+
+if {[dict exists $::env PWD]} {
+  cd [dict get $::env PWD]
+}
