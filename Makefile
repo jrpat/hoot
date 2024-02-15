@@ -27,7 +27,7 @@ $(jimlib): jimtcl/configure
 		&& ./configure --minimal \
 							     --utf8 --disable-lineedit --math \
 		               --with-ext="array,file,glob,interp,regexp" \
-									 --without-ext="aio,eventloop,history,oo,package,signal,syslog,tree,zlib" \
+									 --without-ext="eventloop,history,oo,package,signal,syslog,tree,zlib" \
 									 >/dev/null \
 		&& make >/dev/null 2>&1
 
@@ -40,6 +40,9 @@ test: $(jimlib)
 
 clean:
 	rm -f hoot hoot.h
+
+reset: clean
+	cd jimtcl && git reset --hard HEAD && git clean -f -d -x
 
 
 install: hoot
