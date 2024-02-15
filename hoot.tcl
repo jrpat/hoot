@@ -10,7 +10,6 @@ proc K {x {y {}}} { set x }
 proc first {lst} { lindex $lst 0 }
 proc last {lst} { lindex $lst end }
 proc rest {lst} { lrange $lst 1 end }
-proc = {args} { uplevel 1 expr {*}$args }
 proc str/len {s} { string length $s }
 proc str/first {s} { string index $s 0 }
 proc str/last {s} { string index $s end }
