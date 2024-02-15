@@ -31,7 +31,7 @@ void render_stdin(void) {
   if (!OK( Jim_Eval(jim, "stdin read") ))
     FAIL("Error reading input: %s\n", RESULT());
 
-  Jim_Obj *script = Jim_NewStringObj(jim, "render {", -1);
+  Jim_Obj *script = Jim_NewStringObj(jim, "H/render {", -1);
   Jim_AppendString(jim, script, RESULT(), -1);
   Jim_AppendString(jim, script, "}", -1);
 
@@ -43,7 +43,7 @@ void render_stdin(void) {
 
 
 void render_file(const char *filename) {
-  Jim_Obj *script = Jim_NewStringObj(jim, "renderfile ", -1);
+  Jim_Obj *script = Jim_NewStringObj(jim, "H/file ", -1);
   Jim_AppendString(jim, script, filename, -1);
 
   if (!OK( Jim_EvalObj(jim, script) ))

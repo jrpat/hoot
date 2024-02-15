@@ -35,7 +35,7 @@ jimtcl/configure:
 	@git submodule update --init
 
 
-test: $(jimlib)
+test: hoot
 	@jimtcl/jimsh t/test.tcl && echo PASS || echo FAIL
 
 clean:

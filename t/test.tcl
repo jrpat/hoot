@@ -1,5 +1,5 @@
 source hoot.tcl
-set actual [renderfile t/input.hoot.md]
+set actual [H/file t/input.hoot.md]
 set expected [slurp t/output.md]
 if {$actual ne $expected} {
   set line [string repeat - 120]

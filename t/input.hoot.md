@@ -18,6 +18,7 @@ and a chin scratch. Then it's time to go.
 $[+myblock+]
 Here is myblock
 It is multiple lines
+$[greet "Person"]
 $[-myblock-]
 
 $[solong \
