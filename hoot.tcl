@@ -36,8 +36,8 @@ proc template {n ps txt} {
 }
 
 proc defaults {vars} {
-  . foreach {name val} $vars {
-    if [uplevel 1 info exists $name] {} {uplevel 1 set $name $val}
+  . foreach {k v} $vars {
+    if [uplevel 1 info exists $k] {} {uplevel 1 set $k "{$v}"}
   }
 }
 

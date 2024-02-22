@@ -46,9 +46,10 @@ $multiline
 
 $myblock
 
-$[set abc 123]
+$[set X/abc 123]
 $[defaults {
-    abc 456
-    xyz 789
+    X/abc 456
+    X/xyz 789
+    X/foo {}
 }]
-${abc} ${xyz}
+${X/abc} ${X/xyz}${X/foo}
