@@ -45,3 +45,10 @@ The price is $123
 $multiline
 
 $myblock
+
+$[set abc 123]
+$[defaults {
+    abc 456
+    xyz 789
+}]
+${abc} ${xyz}

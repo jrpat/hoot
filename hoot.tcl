@@ -35,6 +35,12 @@ proc template {n ps txt} {
   . eval "proc $n {$ps} {subst {$txt}}"
 }
 
+proc defaults {vars} {
+  . foreach {name val} $vars {
+    if [uplevel 1 info exists $name] {} {uplevel 1 set $name $val}
+  }
+}
+
 proc H/prep {txt} {
   return [string map {
     {\$[}   {$\[}
