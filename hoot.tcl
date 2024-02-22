@@ -25,6 +25,8 @@ proc include {path {vars {}}} {
   set path [string trim $path]
   if {[regexp {^\.\.?/.+} $path]} {
     set path "[file dirname $::FILE]/$path"
+  } elseif {[regexp {^~} $path]} {
+    set path "[pwd][str/rest $path]"
   }
   string cat [H/file "$path" [string trim $vars]] "\30"
 }

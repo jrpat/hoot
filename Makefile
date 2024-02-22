@@ -36,7 +36,7 @@ jimtcl/configure:
 
 
 test: hoot
-	@jimtcl/jimsh t/test.tcl && echo PASS || echo FAIL
+	@PWD=t jimtcl/jimsh t/test.tcl && echo PASS || echo FAIL
 
 clean:
 	rm -f hoot hoot.h

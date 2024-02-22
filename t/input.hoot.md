@@ -1,4 +1,4 @@
-$[include t/subdir/other-templates.hoot.md]
+$[include ~/subdir/other-templates.hoot.md]
    $[set dogname \
 Charlie]
 $[set multiline $[string trim {
