@@ -1,6 +1,8 @@
 syn region hootCode start=/\$\[[^~]/ end=/\]/ skip=/\\\]/ containedin=ALL
 syn region hootComment start=/\$\[\~/ end=/\]/ skip=/\\\]/ containedin=ALL
 
+syn region hootExpr start=/\$(/ end=/)/ skip=/\\)/ containedin=ALL contains=hootOperator
+
 syn match hootVar /\v\$\w+/ containedin=ALL
 syn match hootVar /\v\$\{[^}]+\}/ containedin=ALL
 
@@ -10,6 +12,7 @@ syn region hootComment start=/;\s*\#/hs=s+1 skip="\\$" end="$" contained contain
 
 hi def link hootComment Comment
 hi def link hootVar Identifier
+hi def link hootExpr Identifier
 hi def link hootCode PreProc
 hi def link hootTcl PreProc
 
