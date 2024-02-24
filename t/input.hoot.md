@@ -53,3 +53,5 @@ $[defaults {
     X/foo {}
 }]
 ${X/abc} ${X/xyz}${X/foo}
+
+12 + 34 = $(12 + 34)
