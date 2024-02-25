@@ -46,7 +46,9 @@ proc defaults {vars} {
 proc H/prep {txt} {
   return [string map {
     {\$[}   {$\[}
+    {\$(}   {$\(}
     {$\[}   {$\[}
+    {$\(}   {$\(}
     {$[>}   {[include }
     {$[set} {[. set}
     {$[.}   {[. }

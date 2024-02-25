@@ -41,6 +41,8 @@ $[or $[str/rest $onechar] "not-blank"]
 \$[this is code]
 $\[this is also code]
 The price is $123
+\$(this is an expr)
+$\(this is also an expr)
 
 $multiline
 
