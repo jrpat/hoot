@@ -19,6 +19,7 @@ proc ? {c a b} { uplevel 1 "if {$c} {K {$a}} {K {$b}}" }
 proc = {x {_ _} {c 1}} { uplevel 1 "if {$c} {K {$x}} {K \"\30\"}" }
 proc @ {d k {v {}}} { dict getdef $d $k $v }
 proc or {x y} { if {$x eq ""} {K $y} {K $x} }
+proc do {args} { . uplevel 1 {*}$args }
 
 proc ~ {args} { K "\30" }
 proc . {args} { K "\30" [uplevel 1 $args] }

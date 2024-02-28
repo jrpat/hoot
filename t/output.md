@@ -43,4 +43,5 @@ It is multiple lines
 --
 
 b is 2
+c is 3
 d is not present
