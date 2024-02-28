@@ -23,13 +23,12 @@ proc ~ {args} { K "\30" }
 proc . {args} { K "\30" [uplevel 1 $args] }
 
 proc include {path {vars {}}} {
-  set path [string trim $path]
-  if {[regexp {^\.\.?/.+} $path]} {
-    set path "[file dirname $::FILE]/$path"
-  } elseif {[regexp {^~} $path]} {
-    set path "[pwd][str/rest $path]"
-  }
-  string cat [H/file "$path" [string trim $vars]] "\30"
+  string cat [H/file [H/path $path] [string trim $vars]] "\30"
+}
+
+rename source tcl/source
+proc source {path} {
+  . tcl/source [H/path $path]
 }
 
 proc template {n ps txt} {
@@ -80,6 +79,15 @@ proc H/file {path {vars {}}} {
   set f $::FILE
   set ::FILE $path
   K [H/render [slurp $path] $vars] [set ::FILE $f]
+}
+
+proc H/path {path} {
+  set path [string trim $path]
+  if {[regexp {^\.\.?/.+} $path]} {
+    set path "[file dirname $::FILE]/$path"
+  } elseif {[regexp {^~} $path]} {
+    set path "[pwd][str/rest $path]"
+  }
 }
 
 set FILE {}

@@ -39,3 +39,8 @@ It is multiple lines
 123 789
 
 12 + 34 = 46
+
+--
+
+b is 2
+d is not present

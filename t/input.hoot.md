@@ -60,3 +60,9 @@ $[defaults {
 ${X/abc} ${X/xyz}${X/foo}
 
 12 + 34 = $(12 + 34)
+
+--
+
+$[set D $[dict create a 1 b 2]]
+b is $[@ $D b]
+d is $[@ $D c {not present}]
