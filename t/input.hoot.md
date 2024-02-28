@@ -35,6 +35,9 @@ $[= "What a conditional string!" if {$place eq "building"}]
 $[= "This will not render" if {$place eq "foobar"}]
 $[= "Also will not render" if {$place eq "foobar"}]xx
 
+$[? {$a == 1} {A is 1} {A is not 1}]
+$[? {$b == 1} {B is 1} {B is not 1}]
+
 $[set onechar "x"]
 $[or $[str/rest $onechar] "not-blank"]
 

@@ -15,6 +15,7 @@ proc str/first {s} { string index $s 0 }
 proc str/last {s} { string index $s end }
 proc str/rest {s} { string range $s 1 end }
 proc slurp {p} { K [read [set f [open $p r]]] [close $f] }
+proc ? {c a b} { uplevel 1 "if {$c} {K {$a}} {K {$b}}" }
 proc = {x {_ _} {c 1}} { uplevel 1 "if {$c} {K {$x}} {K \"\30\"}" }
 proc or {x y} { if {$x eq ""} {K $y} {K $x} }
 

@@ -19,6 +19,9 @@ What a string!
 What a conditional string!
 xx
 
+A is 1
+B is not 1
+
 not-blank
 
 $[this is code]
