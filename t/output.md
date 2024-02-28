@@ -43,5 +43,5 @@ It is multiple lines
 --
 
 b is 2
-c is 3
+c is 88,99
 d is not present

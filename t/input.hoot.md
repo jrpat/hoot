@@ -65,8 +65,8 @@ ${X/abc} ${X/xyz}${X/foo}
 
 $[set D $[dict create a 1 b 2]]
 $[do {
-    dict set D c 3
+    dict set D c {x 88 y 99}
 }]
 b is $[@ $D b]
-c is $[@ $D c]
+c is $[@ $D {c x}],$[@ $D {c y}]
 d is $[@ $D d {not present}]
