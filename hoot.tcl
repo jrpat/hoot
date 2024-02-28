@@ -86,10 +86,11 @@ proc H/file {path {vars {}}} {
 proc H/path {path} {
   set path [string trim $path]
   if {[regexp {^\.\.?/.+} $path]} {
-    set path "[file dirname $::FILE]/$path"
+    return "[file dirname $::FILE]/$path"
   } elseif {[regexp {^~} $path]} {
-    set path "[pwd][str/rest $path]"
+    return "[pwd][str/rest $path]"
   }
+  return $path
 }
 
 set FILE {}
