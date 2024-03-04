@@ -45,6 +45,13 @@ proc defaults {vars} {
   }
 }
 
+proc each {{var it} list body} {
+  foreach $var $list {
+    lappend output [subst [string trim $body]]
+  }
+  join $output "\n"
+}
+
 set H/prepmap {
   {\$[}   {$\[}
   {\$(}   {$\(}

@@ -70,3 +70,9 @@ $[do {
 b is $[@ $D b]
 c is $[@ $D {c x}],$[@ $D {c y}]
 d is $[@ $D d {not present}]
+
+--
+
+$[each number {1 2 3 4} {
+The number is $number
+}]

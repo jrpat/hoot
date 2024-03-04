@@ -45,3 +45,10 @@ It is multiple lines
 b is 2
 c is 88,99
 d is not present
+
+--
+
+The number is 1
+The number is 2
+The number is 3
+The number is 4
