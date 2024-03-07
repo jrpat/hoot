@@ -92,14 +92,15 @@ proc H/file {path {vars {}}} {
 
 proc H/path {path} {
   set path [string trim $path]
-  if {[regexp {^\.\.?/.+} $path]} {
+  if {[regexp {^\.\.?/} $path]} {
     return "[file dirname $::FILE]/$path"
-  } elseif {[regexp {^~} $path]} {
-    return "[pwd][str/rest $path]"
+  } elseif {[regexp {^~/} $path]} {
+    return "$::ROOT[str/rest $path]"
   }
   return $path
 }
 
 set FILE {}
-cd [dict getdef $::env PWD [pwd]]
+set ROOT [file normalize [dict getdef $::env PWD [pwd]]]
+cd $ROOT
 if {[dict getdef $::env BS 0]} {lappend H/prepmap "\\" "\\\\"}
