@@ -13,9 +13,15 @@ By way of rough analogy:
 - [Hoot](https://github.com/jrpat/hoot) : [Tcl](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html)
 :: [ERB](https://www.puppet.com/docs/puppet/5.5/lang_template_erb.html) : [Ruby](https://www.ruby-lang.org/en/)
 
-But unlike Scribble or Jinja, which introduce their own (complicated) syntax on top of their host language, Hoot embraces Tcl and modifies its syntax as little as possible. In fact, Hoot makes **only one change** to [Jim](https://jim.tcl.tk/index.html/doc/www/www/index.html), its host Tcl dialect.
+But unlike Scribble or Jinja, which introduce their own (complicated)
+syntax on top of their host language, Hoot embraces Tcl and modifies its
+syntax as little as possible. In fact, Hoot makes **only one change** to
+[Jim](https://jim.tcl.tk/index.html/doc/www/www/index.html), its host
+Tcl dialect.
 
-And it's a 375k statically-linked binary that can be built on virtually any system with a C compiler (or you can `[source hoot.tcl]` from a Tcl program).
+And it's a 375k statically-linked binary that can be built on virtually
+any system with a C compiler (or you can `[source hoot.tcl]` from a Tcl
+program).
 
 
 #### Quick Example
@@ -75,25 +81,36 @@ or you can pass `-` as the filename to read from stdin:
 mycmd | hoot -
 ```
 
-Hoot outputs to stdout, so you can redirect its output to a file or pipe it to another command:
+Hoot outputs to stdout, so you can redirect its output to a file or pipe
+it to another command:
 
 ```bash
 hoot myfile.hoot.md > myfile.md
 hoot myfile.hoot.md | another-command
 ```
 
-Hoot can also be used directly from a Tcl program. More details in the [Usage](#usage) section below.
+Hoot can also be used directly from a Tcl program. More details in the
+[Usage](#usage) section below.
 
 
 #### Why Tcl?
 
-Tcl is a simple, yet [surprisingly powerful language](http://antirez.com/articoli/tclmisunderstood.html). Hoot was inspired by Tcl's [`subst`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_subst) command, which is already tantalizingly close to being a proper templating language in its own right.
+Tcl is a simple, yet [surprisingly powerful
+language](http://antirez.com/articoli/tclmisunderstood.html). Hoot was
+inspired by Tcl's
+[`subst`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_subst)
+command, which is already tantalizingly close to being a proper
+templating language in its own right.
 
-The main thing that is holding it back is that the Tcl syntax for commands (`[...]`) is pretty common in normal prose. Plus, in a templating environment, we'd rather that some commands (such as `set`) don't produce any output.
+The main thing that is holding it back is that the Tcl syntax for
+commands (`[...]`) is pretty common in normal prose. Plus, in
+a templating environment, we'd rather that some commands (such as `set`)
+don't produce any output.
 
 #### Why The Name?
 
-Tcl is commonly pronounced like "tickle", and a tickle makes you laugh, or... "hoot". Plus I like owls. What can I say?
+Tcl is commonly pronounced like "tickle", and a tickle makes you laugh,
+or... "hoot". Plus I like owls. What can I say?
 
 
 -----
@@ -103,11 +120,16 @@ Tcl is commonly pronounced like "tickle", and a tickle makes you laugh, or... "h
 
 ##### tl;dr:
 
-If you already know Tcl, then all you need to know about Hoot syntax is that you use `$[command ...]` instead of `[command ...]`. Note the `$` at the beginning. Everything else is the same.
+If you already know Tcl -- specifially the [Jim
+dialect](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html) -- then
+all you need to know about Hoot syntax is that you use `$[command ...]`
+instead of `[command ...]`. Note the `$` at the beginning. Everything
+else is the same.
 
 <h3 id=the-big-3>The Big Three</h3>
 
-Very succinctly, Hoot's syntax can be described as consisting of three forms:
+Very succinctly, Hoot's syntax can be described as consisting of three
+forms:
 
 - `${…}` inserts a variable
 - `$[…]` inserts the output of a command
@@ -117,7 +139,8 @@ Let's discuss each one in more detail…
 
 ### Variables — `${…}`
 
-The most basic and most common thing to do with Hoot is set and use variables. You set variables like this:
+The most basic and most common thing to do with Hoot is set and use
+variables. You set variables like this:
 
 ```text
 $[set myVariable "some really long text I'd rather not type"]
@@ -139,9 +162,12 @@ And this line is also some really long text I'd rather not type
 
 ##### Variable Names
 
-One neat thing about Tcl is that variables can use almost any characters in their names. The only exception is whitespace. You can name a variable `foo/bar` or even `this.is/my#variable-name`.
+One neat thing about Tcl is that variables can use almost any characters
+in their names. The only exception is whitespace. You can name
+a variable `foo/bar` or even `this.is/my#variable-name`.
 
-If the variable name consists of only letters and numbers, you can omit the curly braces when using them. For instance:
+If the variable name consists of only letters and numbers, you can omit
+the curly braces when using them. For instance:
 
 ```text
 $[set myVar "some really long text..."]
@@ -165,11 +191,15 @@ will produce
 olleH
 ```
 
-This is a big part of what makes hoot so powerful. Unlike say, Jinja, which requires writing custom filters or extensions, you can write Tcl code directly inside your text.
+This is a big part of what makes hoot so powerful. Unlike say, Jinja,
+which requires writing custom filters or extensions, you can write Tcl
+code directly inside your text.
 
 #### Silencing Commands
 
-Sometimes we want to run a command, but we don't want its output included in our text. For these situations, you can prepend the command's name with a `.`. For example:
+Sometimes we want to run a command, but we don't want its output
+included in our text. For these situations, we can prepend the
+command's name with a `.`. For example:
 
 ```text
 $[set name "Sam"]
@@ -185,11 +215,16 @@ will produce
 A common greeting goes like this: "Hello there, Sam".
 ```
 
-> If you know Tcl, you may have been thinking "Hey, `set` returns a value. Why isn't it included in the text?". In Hoot, some commands are implicitly silent, since they are very common and we almost never want their output. `set` is one such command.
+> If you know Tcl, you may have been thinking "Hey, `set` returns
+> a value. Why isn't it included in the text?". In Hoot, some commands
+> are implicitly silent, since they are very common and we almost never
+> want their output. `set` is one such command.
 
 ### Expressions — `$(…)`
 
-Sometimes we want to insert the result of some math in our text. In standard Tcl, we do this using the `expr` command, but Jim introduces a convenient shorthand: `$(…)`.
+Sometimes we want to insert the result of some math in our text. In
+standard Tcl, we do this using the `expr` command, but Jim introduces
+a convenient shorthand: `$(…)`.
 
 For example:
 
@@ -207,13 +242,17 @@ The result of 123 + 456 is 579.
 The result of 123 squared is 15129.
 ```
 
-A [wide range of mathematical and logical operators](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_expressions) are supported.
+A [wide range of mathematical and logical
+operators](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_expressions)
+are supported.
 
 ### Backslash Escapes
 
-Hoot supports all of the [standard Tcl backslash escape sequences](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#BackslashSequences).
+Hoot supports all of the [standard Tcl backslash escape
+sequences](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#BackslashSequences).
 
-Additionally, you can backslash-escape the dollar sign in any of the [the big 3](#the-big-3) syntax forms. For example:
+Additionally, you can backslash-escape the dollar sign in any of the
+[the big 3](#the-big-3) syntax forms. For example:
 
 ```text
 \${myVariable}
@@ -231,7 +270,10 @@ $(1 + 2)
 
 #### Disabling Backslash Escapes
 
-Sometimes we may want to produce text that uses a lot of backslashes as part of its syntax (*cough* [LaTeX](https://www.latex-project.org) *cough*). In those situations, backslash escapes can be surprising and annoying. 
+Sometimes we may want to produce text that uses a lot of backslashes as
+part of its syntax (*cough* [LaTeX](https://www.latex-project.org)
+*cough*). In those situations, backslash escapes can be surprising and
+annoying. 
 
 For instance, you would not expect
 
@@ -245,12 +287,17 @@ to produce
 	extbf{My bold text}
 ```
 
-That happens because Hoot interprets `\t` as a tab character. In these settings, we can disable Hoot's backslash escape processing by setting the `BS` [environment variable](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_env). We'll discuss how to do that a little later on.
+That happens because Hoot interprets `\t` as a tab character. In these
+settings, we can disable Hoot's backslash escape processing by setting
+the `BS` [environment
+variable](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_env). We'll
+discuss how to do that a little later on.
 
 
 ### Comments
 
-In Hoot, the `!` command ignores anything passed into it and produces no output. Thus it works effectively as a way to add comments to text.
+In Hoot, the `!` command ignores anything passed into it and produces no
+output. Thus it works effectively as a way to add comments to text.
 
 For example:
 
@@ -267,11 +314,15 @@ And this is text
 
 ## Control Structures
 
-Control structures are all those things that control the flow of a program. In Hoot, there are 2: `each` and `if`.
+Control structures are all those things that control the flow of
+a program. In Hoot, there are 2: `each` and `if`.
 
-In general, Hoot control structures begin with an "opening tag" of the form `$[+ command …arguments… +]`.
+In general, Hoot control structures begin with an "opening tag" of the
+form `$[+ command …arguments… +]`.
 
-They end with a "closing tag" of the form `$[--]`. The closing tag may have any text in between the hyphens. That is, the following are all identical:
+They end with a "closing tag" of the form `$[--]`. The closing tag may
+have any text in between the hyphens. That is, the following are all
+identical:
 
 ```text
 $[--]
@@ -282,7 +333,8 @@ $[- I love Hoot -]
 
 ### Each
 
-Loops over the items in a list, and outputs the text between the open and close tag separated by newlines. For example:
+Loops over the items in a list, and outputs the text between the open
+and close tag separated by newlines. For example:
 
 ```text
 $[+ each number {1 2 3} +]
@@ -298,7 +350,9 @@ will produce
 3 squared is 9
 ```
 
-The syntax of `each` is the same as Tcl's [`foreach`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_foreach), so you can for instance loop over the keys and values of a dictionary:
+The syntax of `each` is the same as Tcl's
+[`foreach`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_foreach),
+so you can for instance loop over the keys and values of a dictionary:
 
 ```text
 $[+ each {k v} {a 1 b 2 c 3} +]
@@ -314,7 +368,8 @@ The key b has the value 2
 The key c has the value 3
 ```
 
-Additionally, the variable name can be omitted, in which case it will default to `it`. For example:
+Additionally, the variable name can be omitted, in which case it will
+default to `it`. For example:
 
 ```text
 $[+ each {a b c} +]
@@ -333,7 +388,9 @@ It is c
 
 ### If / Else / Elseif
 
-`if` is comparable with [Tcl's `if`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_if). For example:
+`if` is comparable with [Tcl's
+`if`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_if). For
+example:
 
 ```text
 $[set x abc]
@@ -350,7 +407,8 @@ will produce
 x is abc
 ```
 
-As in Tcl, we can also use `else` and `elseif`, by using the syntax `$[~ else ~]` or `$[~ elseif … ~]`. For example:
+As in Tcl, we can also use `else` and `elseif`, by using the syntax `$[~
+else ~]` or `$[~ elseif … ~]`. For example:
 
 ```text
 $[set x "foo"]
@@ -372,11 +430,16 @@ x is "foo"
 
 ## Blocks and Includes
 
-A core part of most templating systems is the ability to define and name large chunks of text, and the ability to include other files which may use these large chunks of text.
+A core part of most templating systems is the ability to define and name
+large chunks of text, and the ability to include other files which may
+use these large chunks of text.
 
 ### Blocks
 
-Hoot introduces a convenient way of assigning a large amount of textual content to a variable without using `$[set …]`. It's analogous to [Jinja's `{% block %}`](https://jinja.palletsprojects.com/en/3.1.x/templates/#template-inheritance).
+Hoot introduces a convenient way of assigning a large amount of textual
+content to a variable without using `$[set …]`. It's analogous to
+[Jinja's `{% block
+%}`](https://jinja.palletsprojects.com/en/3.1.x/templates/#template-inheritance).
 
 For instance, an HTML template might be
 
@@ -391,7 +454,11 @@ For instance, an HTML template might be
 </html>
 ```
 
-While `$[set title "Some Title"]` feels fine, it would be annoying to have to define the entirety of the HTML content using `$[set content ...]` - if for no other reason than that our editor won't syntax-highlight it properly. In these cases, we can use a syntax similar to control structures to define variables:
+While `$[set title "Some Title"]` feels fine, it would be annoying to
+have to define the entirety of the HTML content using `$[set content
+...]` - if for no other reason than that our editor won't
+syntax-highlight it properly. In these cases, we can use a syntax
+similar to control structures to define variables:
 
 ```text
 $[+ block content +]
@@ -402,9 +469,13 @@ $[+ block content +]
 $[--]
 ```
 
-This sets the value of `content` to everything between `$[+ block content +]` and `$[--]`, *excluding any whitespace at the beginning and end*. So in this case, `$content` will begin with `<div>` and end with `</div>`, *without* newlines before and after.
+This sets the value of `content` to everything between `$[+ block
+content +]` and `$[--]`, *excluding any whitespace at the beginning and
+end*. So in this case, `$content` will begin with `<div>` and end with
+`</div>`, *without* newlines before and after.
 
-As with control structures, you can put text between `$[-` and `-]`. For example, you could write `$[- end block -]` or `$[- end content -]`.
+As with control structures, you can put text between `$[-` and `-]`. For
+example, you could write `$[- end block -]` or `$[- end content -]`.
 
 ### Including Other Files
 
@@ -412,20 +483,33 @@ As with control structures, you can put text between `$[-` and `-]`. For example
 
 Reads the content of a file, processes it with Hoot, and inserts the result. 
 
-Analogous to [Jinja's `{% include %}`](https://jinja.palletsprojects.com/en/3.1.x/templates/#include) or [Sass's `@import`](https://sass-lang.com/documentation/at-rules/import/).
+Analogous to [Jinja's `{% include
+%}`](https://jinja.palletsprojects.com/en/3.1.x/templates/#include) or
+[Sass's
+`@import`](https://sass-lang.com/documentation/at-rules/import/).
 
 <h4 id=path-syntax>Path Syntax</h4>
 
 `path` is interpreted in a few ways, depending on its first few characters:
-- **`./`** or **`../`** -- means "relative to the path of the file being processed". That is, if `/the/path/to/my/file.md` is being processed, and it contains `$[> ../other/file.md]`, the contents of `/the/path/to/other/file.md` is inserted.
-- **`~/`** -- means "relative to the directory from which the `hoot` command was run".
+- **`./`** or **`../`** -- means "relative to the path of the file being
+  processed". That is, if `/the/path/to/my/file.md` is being processed,
+  and it contains `$[> ../other/file.md]`, the contents of
+  `/the/path/to/other/file.md` is inserted.
+- **`~/`** -- means "relative to the directory from which the `hoot`
+  command was run".
 - **`/`** -- means it is an absolute path to a file.
-- Otherwise, `path` is considered relative to the current working directory. This *usually* behaves the same as `~/`, but can be different in some edge-cases (ie. if `$[cd /some/other/path]` is at the top of the file)
+- Otherwise, `path` is considered relative to the current working
+  directory. This *usually* behaves the same as `~/`, but can be
+  different in some edge-cases (ie. if `$[cd /some/other/path]` is at
+  the top of the file)
 
 
 ### Combining Blocks and Includes
 
-Blocks and includes can be combined for an effect similar to [Jinja's template inheritance](https://jinja.palletsprojects.com/en/3.1.x/templates/#template-inheritance). For instance:
+Blocks and includes can be combined for an effect similar to [Jinja's
+template
+inheritance](https://jinja.palletsprojects.com/en/3.1.x/templates/#template-inheritance). For
+instance:
 
 <sub>base.hoot.html:</sub>
 ```text
@@ -469,9 +553,11 @@ Running `hoot index.hoot.html` will output:
 
 #### Setting Variables for Includes
 
-Optionally, a dictionary can be passed as a second argument to `include`, and it will be used to set variables in that file's context.
+Optionally, a dictionary can be passed as a second argument to
+`include`, and it will be used to set variables in that file's context.
 
-In the example above, we could remove the first two lines and replace the last line with:
+In the example above, we could remove the first two lines and replace
+the last line with:
 
 ```text
 $[> base.hoot.html {
@@ -484,9 +570,14 @@ which would generate identical output.
 
 ## Templates
 
-Templates are comparable with functions in regular programming languages, and are defined using the same syntax as control structures and blocks.
+Templates are comparable with functions in regular programming
+languages, and are defined using the same syntax as control structures
+and blocks.
 
-They also share syntax with [Tcl's `proc`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_proc), which means arguments can have default values, and templates can take variadic arguments.
+They also share syntax with [Tcl's
+`proc`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_proc),
+which means arguments can have default values, and templates can take
+variadic arguments.
 
 Here's a template that renders an HTML `<input>` element:
 
@@ -516,7 +607,10 @@ will output
 
 #### Named Arguments
 
-A common pattern for simulating named arguments is to define a template with variadic arguments, and then use the `@` command (discussed below) to treat them like a dictionary. Here's the same template from above, rewritten to use named optional arguments:
+A common pattern for simulating named arguments is to define a template
+with variadic arguments, and then use the `@` command (discussed below)
+to treat them like a dictionary. Here's the same template from above,
+rewritten to use named optional arguments:
 
 ```text
 $[+ template input {name args} +]
@@ -541,38 +635,58 @@ which will have the same output as above.
 
 ## Command Reference
 
-In addition to [all the standard Tcl commands](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#CommandIndex), Hoot includes a number of commands that are particularly useful in a templating environment.
+In addition to [all the standard Tcl
+commands](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#CommandIndex),
+Hoot includes a number of commands that are particularly useful in
+a templating environment.
 
 
 ##### Utility Commands
 
 **`$[or $x $y]`**
 
-Inserts the value of `$x`, unless it is an empty string, in which case it inserts the value of `$y`.
+Inserts the value of `$x`, unless it is an empty string, in which case
+it inserts the value of `$y`.
 
 **`$[= $x if {expression}]`**
 
-Inserts the value of `$x` if the result of `expression` is [truthy](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_if). The `if {expression}` portion may be omitted, in which case it inserts the value of `$x` directly.
+Inserts the value of `$x` if the result of `expression` is
+[truthy](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_if). The
+`if {expression}` portion may be omitted, in which case it inserts the
+value of `$x` directly.
 
 **`$[? {expression} $x $y]`**
 
-Inserts the value of `$x` if the result of `expression` is [truthy](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_if), otherwise inserts the value of `$y`.
+Inserts the value of `$x` if the result of `expression` is
+[truthy](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_if),
+otherwise inserts the value of `$y`.
 
 **`$[@ $dict key defaultValue]`**
 
-A synonym for [`dict getwithdefault`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_dict). If the dictionary contains a value for `key`, that value is output. Otherwise, `defaultValue` is output. `defaultValue` may be omitted, in which case it is an empty string.
+A synonym for [`dict
+getwithdefault`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_dict). If
+the dictionary contains a value for `key`, that value is
+output. Otherwise, `defaultValue` is output. `defaultValue` may be
+omitted, in which case it is an empty string.
 
 **`$[source path]`**
 
-Analogous to [Tcl's `source`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_source). Loads and evaluates the contents of `path`, but outputs nothing. `path` is interpreted in the same was as with [`include`](#path-syntax).
+Analogous to [Tcl's
+`source`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_source). Loads
+and evaluates the contents of `path`, but outputs nothing. `path` is
+interpreted in the same was as with [`include`](#path-syntax).
 
 **`$[do code]`**
 
-Analogous to [Tcl's `eval`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_eval). Executes `code`, but outputs nothing.
+Analogous to [Tcl's
+`eval`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_eval). Executes
+`code`, but outputs nothing.
 
 **`$[contentsOf path]`**
 
-Outputs the contents of the file at `path` without processing them in any way. `path` is interpreted in the same was as with [`include`](#path-syntax).
+Outputs the contents of the file at `path` without processing them in
+any way. `path` is interpreted in the same was as with
+[`include`](#path-syntax).
 
 
 ##### Aliases
@@ -604,11 +718,16 @@ Usage:
 
 #### Environment Variables
 
-There are a few environment variables that can be used to affect Hoot's execution. They are:
+There are a few environment variables that can be used to affect Hoot's
+execution. They are:
 
-- `PWD=path` causes Hoot to consider `path` to be the "root" directory, from which it interprets other paths.
-- `BS=1` causes Hoot to ignore backslash escapes. This is helpful when processing backslash-heavy content such as LaTeX.
-- `PREP=1` is used for debugging. This causes Hoot to skip rendering the input and instead output the intermediate raw Tcl that would be passed to `subst`.
+- `PWD=path` causes Hoot to consider `path` to be the "root" directory,
+  from which it interprets other paths.
+- `BS=1` causes Hoot to ignore backslash escapes. This is helpful when
+  processing backslash-heavy content such as LaTeX.
+- `PREP=1` is used for debugging. This causes Hoot to skip rendering the
+  input and instead output the intermediate raw Tcl that would be passed
+  to `subst`.
 
 Here is an example of using all 3:
 
@@ -619,9 +738,11 @@ PWD=/path/to/files BS=1 PREP=1 hoot myfile.md
 
 ### From a Tcl Program
 
-The core functionality of Hoot is implemented entirely in around a hundred lines of Tcl.
+The core functionality of Hoot is implemented entirely in around
+a hundred lines of Tcl.
 
-To use it directly from a Tcl program, first create a file called `hoot.tcl` with the Hoot Tcl code. You can do this in one of two ways:
+To use it directly from a Tcl program, first create a file called
+`hoot.tcl` with the Hoot Tcl code. You can do this in one of two ways:
 
 ```bash
 hoot -t > hoot.tcl
@@ -631,9 +752,13 @@ cp /path/to/hoot/code/hoot.tcl hoot.tcl
 
 Once you have that file, simply `source hoot.tcl`.
 
-The procs beginning with `H/` can be used to do everything the `hoot` command line program does. In fact, when you run `hoot myfile` from the command line, it simply executes the Tcl code `H/file myfile`.
+The procs beginning with `H/` can be used to do everything the `hoot`
+command line program does. In fact, when you run `hoot myfile` from the
+command line, it simply executes the Tcl code `H/file myfile`.
 
-These procs are short and easy to read, and their source in your `hoot.tcl` file should be considered their canonical documentation. However, here is a brief description:
+These procs are short and easy to read, and their source in your
+`hoot.tcl` file should be considered their canonical
+documentation. However, here is a brief description:
 
 - `H/prep text` Converts `text` from Hoot syntax into raw Tcl.
 - `H/subst text` Runs the raw Tcl from `H/prep`.
@@ -646,9 +771,12 @@ These procs are short and easy to read, and their source in your `hoot.tcl` file
 
 ## Building & Installing
 
-Hoot can be built on almost any system that has a C compiler, including many embedded systems. The only required library is [libm](https://sourceware.org/newlib/libm.html).
+Hoot can be built on almost any system that has a C compiler, including
+many embedded systems. The only required library is
+[libm](https://sourceware.org/newlib/libm.html).
 
-Building Hoot is simple. After cloning the repository and `cd`ing into the directory, simply run:
+Building Hoot is simple. After cloning the repository and `cd`ing into
+the directory, simply run:
 
 ```bash
 make
@@ -686,6 +814,8 @@ The tests have passed if the output is
 PASS
 ```
 
-If an error occurred, it is displayed. If no error occurred, but the actual output doesn't match the expected output, a side-by-side diff is displayed.
+If an error occurred, it is displayed. If no error occurred, but the
+actual output doesn't match the expected output, a side-by-side diff is
+displayed.
 
 A better testing setup is planned, and contributions are welcome.
