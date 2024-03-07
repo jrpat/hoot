@@ -90,7 +90,11 @@ proc H/file {path {vars {}}} {
   if {![file exists $path]} {throw 2 "File $path does not exist\n"}
   set f $::FILE
   set ::FILE $path
-  K [H/render [slurp $path] $vars] [set ::FILE $f]
+  if {${::H/PREPONLY}} {
+    K [H/prep [slurp $path]]  [set ::FILE $f]
+  } else {
+    K [H/render [slurp $path] $vars] [set ::FILE $f]
+  }
 }
 
 proc H/path {path} {
@@ -106,4 +110,5 @@ proc H/path {path} {
 set FILE {}
 set ROOT [file normalize [dict getdef $::env PWD [pwd]]]
 cd $ROOT
+set H/PREPONLY [dict getdef $::env PREP 0]
 if {[dict getdef $::env BS 0]} {lappend H/prepmap "\\" "\\\\"}
