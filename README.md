@@ -1,8 +1,9 @@
 # Hoot
 
 Hoot is a Tcl-powered text preprocessor. That is, it's is a tool for
-dynamically generating any kind of textual content -- especially where the
-textual content far outweighs the program.
+dynamically generating any kind of textual content -- especially where
+the textual content outweighs the generating program. It's useful for
+generating all kinds of things: prose, HTML, CSS, LaTeX, SQL, even C.
 
 By way of rough analogy:
 
@@ -20,7 +21,7 @@ syntax as little as possible. In fact, Hoot makes **only one change** to
 Tcl dialect.
 
 And it's a 375k statically-linked binary that can be built on virtually
-any system with a C compiler (or you can `[source hoot.tcl]` from a Tcl
+any system with a C compiler (or you can `source hoot.tcl` from a Tcl
 program).
 
 
@@ -99,13 +100,13 @@ Tcl is a simple, yet [surprisingly powerful
 language](http://antirez.com/articoli/tclmisunderstood.html). Hoot was
 inspired by Tcl's
 [`subst`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_subst)
-command, which is already tantalizingly close to being a proper
+command, which makes Tcl tantalizingly close to being a proper
 templating language in its own right.
 
 The main thing that is holding it back is that the Tcl syntax for
-commands (`[...]`) is pretty common in normal prose. Plus, in
-a templating environment, we'd rather that some commands (such as `set`)
-don't produce any output.
+commands (`[...]`) is pretty common in normal prose (in Markdown for
+example). Plus, in a templating environment, we'd rather that some
+commands (such as `set`) don't produce any output.
 
 #### Why The Name?
 
@@ -167,7 +168,7 @@ in their names. The only exception is whitespace. You can name
 a variable `foo/bar` or even `this.is/my#variable-name`.
 
 If the variable name consists of only letters and numbers, you can omit
-the curly braces when using them. For instance:
+the curly braces when using them. For example:
 
 ```text
 $[set myVar "some really long text..."]
@@ -176,7 +177,7 @@ The rest of this line is $myVar
 
 ### Commands — `$[…]`
 
-Insert the output of any Tcl commands inside our text by using `$[…]`.
+Insert the output of any Tcl commands by using `$[…]`.
 
 For example:
 
@@ -352,7 +353,7 @@ will produce
 
 The syntax of `each` is the same as Tcl's
 [`foreach`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_foreach),
-so you can for instance loop over the keys and values of a dictionary:
+so you can loop over the keys and values of a dictionary. For example:
 
 ```text
 $[+ each {k v} {a 1 b 2 c 3} +]
@@ -398,6 +399,7 @@ $[+ if {$x eq "abc"} +]
 x is abc
 $[--]
 $[+ if {$x eq "xyz"} +]
+x is xyz
 $[--]
 ```
 
@@ -617,7 +619,7 @@ $[+ template input {name args} +]
 $[set type $[@ $args type "text"]]
 $[set value $[@ $args value ""]]
 <input name="${name}" type="${type}" value="${value}">
-$[--]
+$[- end template -]
 ```
 
 To use this template:
@@ -645,36 +647,36 @@ a templating environment.
 
 **`$[or $x $y]`**
 
-Inserts the value of `$x`, unless it is an empty string, in which case
-it inserts the value of `$y`.
+Outputs the value of `$x`, unless it is an empty string, in which case
+it outputs the value of `$y`.
 
 **`$[= $x if {expression}]`**
 
-Inserts the value of `$x` if the result of `expression` is
+Outputs the value of `$x` if the result of `expression` is
 [truthy](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_if). The
-`if {expression}` portion may be omitted, in which case it inserts the
+`if {expression}` portion may be omitted, in which case it outputs the
 value of `$x` directly.
 
 **`$[? {expression} $x $y]`**
 
-Inserts the value of `$x` if the result of `expression` is
+Outputs the value of `$x` if the result of `expression` is
 [truthy](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_if),
-otherwise inserts the value of `$y`.
+otherwise outputs the value of `$y`.
 
 **`$[@ $dict key defaultValue]`**
 
 A synonym for [`dict
-getwithdefault`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_dict). If
-the dictionary contains a value for `key`, that value is
-output. Otherwise, `defaultValue` is output. `defaultValue` may be
-omitted, in which case it is an empty string.
+getwithdefault`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_dict).
+Outputs the dictionary's value for `key`, if it exists. Otherwise,
+outputs `defaultValue`. `defaultValue` may be omitted, in which case it
+is an empty string.
 
 **`$[source path]`**
 
 Analogous to [Tcl's
 `source`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_source). Loads
 and evaluates the contents of `path`, but outputs nothing. `path` is
-interpreted in the same was as with [`include`](#path-syntax).
+interpreted in the same way as with [`include`](#path-syntax).
 
 **`$[do code]`**
 
@@ -766,6 +768,10 @@ documentation. However, here is a brief description:
 - `H/path` Interprets a path as per [`include`](#path-syntax)
 - `H/file path` Essentially returns `H/render [H/path path]`
 
+Hoot is written in the [Jim
+dialect](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html) of Tcl,
+and will likely not run as core Tcl.
+
 -----
 
 
@@ -819,3 +825,12 @@ actual output doesn't match the expected output, a side-by-side diff is
 displayed.
 
 A better testing setup is planned, and contributions are welcome.
+
+-----
+
+```text
+#    ,_,
+#   (o,o)   Hoot: A Tcl-powered
+#   {`"'}     text preprocessor
+#   -"-"-
+```
