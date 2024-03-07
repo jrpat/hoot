@@ -46,10 +46,7 @@ proc defaults {vars} {
 }
 
 proc each {{var it} list body} {
-  foreach $var $list {
-    lappend output [subst [string trim $body]]
-  }
-  join $output "\n"
+  join [lmap $var $list "subst {[string trim $body]}"] "\n"
 }
 
 set H/prepmap {
