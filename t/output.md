@@ -55,4 +55,4 @@ The number is 4. x
 
 --
 
-Foo is not "foo"
+Foo is "bar"

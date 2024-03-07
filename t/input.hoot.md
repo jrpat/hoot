@@ -82,6 +82,8 @@ $[- end -]
 $[set foo bar]
 $[+ if {$foo eq "foo"} +]
 Foo is "foo"
+$[~ elseif {$foo eq "bar"} ~]
+Foo is "bar"
 $[~ else ~]
 Foo is not "foo"
 $[- endif -]
