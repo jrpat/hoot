@@ -10,16 +10,16 @@ Here comes my dog, $dogname.
 $[set foo bar]
 
 $[greet $dogname]
-$[~ this is a comment]
+$[! this is a comment]
 
 $dogname sniffs around, wandering here and there.
 Then he comes over for some pats on the head
 and a chin scratch. Then it's time to go.
-$[+myblock+]
+$[+ block myblock +]
 Here is myblock
 It is multiple lines
 $[greet "Person"]
-$[-myblock-]
+$[- myblock -]
 
 $[solong \
 $dogname]
@@ -73,6 +73,15 @@ d is $[@ $D d {not present}]
 
 --
 
-$[each number {1 2 3 4} {
+$[+ each number {1 2 3 4} +]
 The number is $number
-}]
+$[- end -]
+
+--
+
+$[set foo bar]
+$[+ if {$foo eq "foo"} +]
+Foo is "foo"
+$[~ else ~]
+Foo is not "foo"
+$[- endif -]

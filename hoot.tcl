@@ -21,11 +21,19 @@ proc @ {d k {v {}}} { dict getdef $d {*}$k $v }
 proc or {x y} { if {$x eq ""} {K $y} {K $x} }
 proc do {args} { . uplevel 1 {*}$args }
 
-proc ~ {args} { K "\30" }
+proc ! {args} { K "\30" }
 proc . {args} { K "\30" [uplevel 1 $args] }
 
 proc include {path {vars {}}} {
   string cat [H/file [H/path $path] [string trim $vars]] "\30"
+}
+
+proc block {name value} {
+  K "\30" [uplevel 1 set $name "\[$value\]"]
+}
+
+proc each {{var it} list body} {
+  join [lmap $var $list $body] "\n"
 }
 
 rename source tcl/source
@@ -45,10 +53,6 @@ proc defaults {vars} {
   }
 }
 
-proc each {{var it} list body} {
-  join [lmap $var $list "subst {[string trim $body]}"] "\n"
-}
-
 set H/prepmap {
   {\$[}   {$\[}
   {\$(}   {$\(}
@@ -57,8 +61,12 @@ set H/prepmap {
   {$[>}   {[include }
   {$[set} {[. set}
   {$[.}   {[. }
-  {$[+} "\[. set "  {+]} " \[H/subst \[string trim {"
-  {$[-} "}]]]\[~ " {-]} "]"
+  {$[+}   {[}
+  {$[~}   "\}\]\} "
+  {+]}    " \{H/subst \[string trim \{"
+  {~]}    " \{H/subst \[string trim \{"
+  {$[-}   "\}\]\}\]\[! "
+  {-]}    "\]"
   {$[}    {[}
   {[}     {\[}
   {$0} {\$0}  {$1} {\$1}  {$2} {\$2}  {$3} {\$3}  {$4} {\$4}
@@ -70,7 +78,7 @@ proc H/prep {txt} {
 }
 
 proc H/subst {txt} {
-  set txt [uplevel #0 "subst {$txt}"]
+  set txt [uplevel 1 "subst {$txt}"]
   set txt [regsub -all -line "^\\s*\30\[ \t\30]*$\r?\n?" $txt {}]
   string map {"\30" {}} $txt
 }
