@@ -74,7 +74,7 @@ d is $[@ $D d {not present}]
 --
 
 $[+ each number {1 2 3 4} +]
-The number is $number
+The number is $number. $onechar
 $[- end -]
 
 --

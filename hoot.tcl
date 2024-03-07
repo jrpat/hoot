@@ -33,7 +33,7 @@ proc block {name value} {
 }
 
 proc each {{var it} list body} {
-  join [lmap $var $list $body] "\n"
+  uplevel 1 "join \[lmap {$var} {$list} {$body}] \"\n\""
 }
 
 rename source tcl/source
@@ -63,8 +63,8 @@ set H/prepmap {
   {$[.}   {[. }
   {$[+}   {[}
   {$[~}   "\}\]\} "
-  {+]}    " \{H/subst \[string trim \{"
-  {~]}    " \{H/subst \[string trim \{"
+  {+]}    " \{subst \[string trim \{"
+  {~]}    " \{subst \[string trim \{"
   {$[-}   "\}\]\}\]\[! "
   {-]}    "\]"
   {$[}    {[}
@@ -78,7 +78,7 @@ proc H/prep {txt} {
 }
 
 proc H/subst {txt} {
-  set txt [uplevel 1 "subst {$txt}"]
+  set txt [uplevel #0 "subst {$txt}"]
   set txt [regsub -all -line "^\\s*\30\[ \t\30]*$\r?\n?" $txt {}]
   string map {"\30" {}} $txt
 }
