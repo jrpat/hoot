@@ -32,6 +32,10 @@ proc block {name value} {
   K "\30" [uplevel 1 set $name "\[$value\]"]
 }
 
+proc template {name params body} {
+  K "\30" [uplevel 1 "proc $name {$params} {$body}"]
+}
+
 proc each {{var it} list body} {
   uplevel 1 "join \[lmap {$var} {$list} {$body}] \"\n\""
 }
@@ -39,12 +43,6 @@ proc each {{var it} list body} {
 rename source tcl/source
 proc source {path} {
   . tcl/source [H/path $path]
-}
-
-proc template {n ps txt} {
-  set trim [string match "\[\r\n\]" [str/first $txt]]
-  if $trim {set txt [string trim $txt]}
-  . eval "proc $n {$ps} {subst {$txt}}"
 }
 
 proc defaults {vars} {

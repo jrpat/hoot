@@ -1,1 +1,3 @@
-$[template greet {name} {"Hello, $name!"}]
+$[+ template greet {name} +]
+"Hello, ${name}!"
+$[--]

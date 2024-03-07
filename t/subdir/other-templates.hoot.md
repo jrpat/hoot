@@ -1,2 +1,4 @@
 $[include ../templates.hoot.md]
-$[.template solong {name} {"So long, $name!"}]
+$[+ template solong {name} +]
+"So long, ${name}!"
+$[--]
