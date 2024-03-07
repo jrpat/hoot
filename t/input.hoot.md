@@ -86,7 +86,7 @@ $[~ elseif {$foo eq "bar"} ~]
 Foo is "bar"
 $[~ else ~]
 Foo is not "foo"
-$[- endif -]
+$[--]
 
 --
 

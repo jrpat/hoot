@@ -1,5 +1,5 @@
 source hoot.tcl
-set expected [slurp output.md]
+set expected [H/slurp output.md]
 set actual [H/file input.hoot.md]
 #set actual [H/prep [slurp input.hoot.md]]
 if {$actual ne $expected} {
