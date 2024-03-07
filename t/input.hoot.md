@@ -87,3 +87,17 @@ Foo is "bar"
 $[~ else ~]
 Foo is not "foo"
 $[- endif -]
+
+--
+
+$[set cat "Whiskers"]
+$[+ block catblock +]
+$[+ if {$cat eq "Mr. Phooey"} +]
+Cat is named Mr. Phooey
+$[~ elseif {$cat eq "Whiskers"} ~]
+Cat is named Whiskers
+$[~ else ~]
+Not sure what cat is named
+$[- endif -]
+$[- end block -]
+${catblock}

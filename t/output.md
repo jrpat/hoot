@@ -56,3 +56,7 @@ The number is 4. x
 --
 
 Foo is "bar"
+
+--
+
+Cat is named Whiskers
