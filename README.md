@@ -199,14 +199,14 @@ code directly inside your text.
 #### Silencing Commands
 
 Sometimes we want to run a command, but we don't want its output
-included in our text. For these situations, we can prepend the
-command's name with a `.`. For example:
+included in our text. For these situations, we can use the form
+`$[. …]`. Whitespace is optional after the `.`. For example:
 
 ```text
 $[set name "Sam"]
 $[set greeting "Hello"]
+$[. append greeting ", $name"]
 $[.append greeting " there"]
-$[.append greeting ", $name"]
 A common greeting goes like this: "$greeting".
 ```
 
@@ -479,6 +479,7 @@ end*. So in this case, `$content` will begin with `<div>` and end with
 As with control structures, you can put text between `$[-` and `-]`. For
 example, you could write `$[- end block -]` or `$[- end content -]`.
 
+
 ### Including Other Files
 
 **`$[include path]`** or **`$[> path]`**
@@ -569,6 +570,71 @@ $[> base.hoot.html {
 ```
 
 which would generate identical output.
+
+### Superstructure
+
+Sometimes we might want to have a some content which is chunked into
+blocks, where each block has some default value but can be overridden.
+
+In these cases, we can use `defblock`, which defines the content of
+a block *only if it is not already defined*. By default, `defblock` also
+outputs its contents in-place. This is particularly useful when combined
+with includes. For example:
+
+<sub>super.hoot.html</sub>
+```text
+<html>
+    <head>
+        $[+ defblock head +]
+        <link rel=stylesheet href="/default-styles.css">
+        $[- end head -]
+    </head>
+    <body>
+        $[+ defblock body +]
+        This page has no content.
+        $[- end body -]
+    </body>
+</html>
+```
+
+<sub>sub.hoot.html</sub>
+```text
+$[+ block head +]
+<link rel stylesheet href="/alt-styles.css">
+$[--]
+$[+ block body +]
+<b>This page has content!</b>
+$[--]
+$[> super.hoot.html]
+```
+
+Running `hoot sub.hoot.html` will output:
+
+```text
+<html>
+    <head>
+        <link rel stylesheet href="/alt-styles.css">
+    </head>
+    <body>
+        <b>This page has content!</b>
+    </body>
+</html>
+```
+
+#### Silent `defblock`
+
+In the uncommon case where you need `defblock` functionality, but you
+want it to *not* output its contents right away, you can use the `.`
+command:
+
+```text
+$[+ . defblock myblock +]
+This is myblock
+$[--]
+```
+
+Will define `myblock` and output nothing.
+
 
 ## Templates
 

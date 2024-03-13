@@ -1,7 +1,7 @@
 source hoot.tcl
 set expected [H/slurp output.md]
 set actual [H/file input.hoot.md]
-#set actual [H/prep [slurp input.hoot.md]]
+#set actual [H/prep [H/slurp input.hoot.md]]
 if {$actual ne $expected} {
   set line [string repeat - 120]
   set actual [string map {"\30" {∅}} $actual]

@@ -20,6 +20,12 @@ Here is myblock
 It is multiple lines
 $[greet "Person"]
 $[- myblock -]
+$[+ block otherblock +]
+This is otherblock
+$[- otherblock -]
+$[+ block silentdefblock +]
+This is silentdefblock
+$[- silentdefblock -]
 
 $[solong \
 $dogname]
@@ -50,6 +56,12 @@ $\(this is also an expr)
 $multiline
 
 $myblock
+$[+ defblock otherblock +]
+This should not render
+$[--]
+$[+ . defblock silentdefblock +]
+This should not render
+$[--]
 
 $[set X/abc 123]
 $[defaults {
@@ -60,6 +72,8 @@ $[defaults {
 ${X/abc} ${X/xyz}${X/foo}
 
 12 + 34 = $(12 + 34)
+
+$silentdefblock
 
 --
 

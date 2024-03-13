@@ -35,10 +35,13 @@ This is a multiline declaration
 Here is myblock
 It is multiple lines
 "Hello, Person!"
+This is otherblock
 
 123 789
 
 12 + 34 = 46
+
+This is silentdefblock
 
 --
 

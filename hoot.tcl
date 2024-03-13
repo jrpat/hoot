@@ -46,6 +46,14 @@ proc contentsOf {path} {
   H/slurp [H/path $path]
 }
 
+proc defblock {name value} {
+  if {[uplevel 1 info exists $name]} {
+    uplevel 1 set $name
+  } else {
+    uplevel 1 set $name "\[$value\]"
+  }
+}
+
 proc block {name value} {
   K "\30" [uplevel 1 set $name "\[$value\]"]
 }
