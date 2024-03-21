@@ -30,8 +30,9 @@ program).
 The input
 
 ```text
-$[template greet {name} {"Hello, $name!"}]
-$[template solong {name} {"So long, $name!"}]
+$[+ template greet {name} +]
+"Hello, $name!"
+$[- end template - ]
 $[set dogName "Charlie"]
 $[set place "building"]
 
@@ -45,7 +46,7 @@ $dogName sniffs around, wandering here and there.
 Then he comes over for some pats on the head
 and a chin scratch. Then it's time to go.
 
-$[solong $dogName]
+"So long, $dogName!"
 
 *$dogName has left the $place*
 ```
