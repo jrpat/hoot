@@ -31,8 +31,8 @@ The input
 
 ```text
 $[+ template greet {name} +]
-"Hello, $name!"
-$[- end template - ]
+"Hello, ${name}!"
+$[- end template -]
 $[set dogName "Charlie"]
 $[set place "building"]
 
