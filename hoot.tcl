@@ -122,8 +122,8 @@ proc H/slurp {p} {
   K [read [set f [open $p r]]] [close $f]
 }
 
-set FILE {}
-set ROOT [file normalize [dict getdef $::env PWD [pwd]]]
-cd $ROOT
 set H/PREPONLY [dict getdef $::env PREP 0]
+set ROOT [file normalize [dict getdef $::env PWD [pwd]]]
 if {[dict getdef $::env BS 0]} {lappend H/prepmap "\\" "\\\\"}
+set FILE [dict getdef $::env FILE {}]
+cd $ROOT
