@@ -792,6 +792,8 @@ execution. They are:
 
 - `PWD=path` causes Hoot to consider `path` to be the "root" directory,
   from which it interprets other paths.
+- `FILE=path` tells Hoot the file path of the input. This is only useful
+  when piping stdin into Hoot.
 - `BS=1` causes Hoot to ignore backslash escapes. This is helpful when
   processing backslash-heavy content such as LaTeX.
 - `PREP=1` is used for debugging. This causes Hoot to skip rendering the
