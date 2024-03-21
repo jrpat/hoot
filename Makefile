@@ -25,10 +25,10 @@ $(jimlib): jimtcl/configure
 	@echo Building jimtcl
 	@cd jimtcl \
 		&& ./configure --minimal \
-							     --utf8 --disable-lineedit --math \
+		               --utf8 --disable-lineedit --math \
 		               --with-ext="array,file,glob,interp,regexp" \
-									 --without-ext="eventloop,history,oo,package,signal,syslog,tree,zlib" \
-									 >/dev/null \
+		               --without-ext="eventloop,history,oo,package,signal,syslog,tree,zlib" \
+		               >/dev/null \
 		&& make >/dev/null 2>&1
 
 jimtcl/configure:
