@@ -125,8 +125,8 @@ or... "hoot". Plus I like owls. What can I say?
 If you already know Tcl -- specifially the [Jim
 dialect](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html) -- then
 all you need to know about Hoot syntax is that you use `$[command ...]`
-instead of `[command ...]`. Note the `$` at the beginning. Everything
-else is the same.
+instead of `[command ...]`. Note the `$` at the beginning. Now you know
+how to use Hoot. There is more syntax sugar, but it's optional.
 
 <h3 id=the-big-3>The Big Three</h3>
 
@@ -898,8 +898,8 @@ A better testing setup is planned, and contributions are welcome.
 -----
 
 ```text
-#    ,_,
-#   (o,o)   Hoot: A Tcl-powered
-#   {`"'}     text preprocessor
-#   -"-"-
+  ,_,
+ (o,o)   Hoot: A Tcl-powered
+ {`"'}     text preprocessor
+ -"-"-
 ```
