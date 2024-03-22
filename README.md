@@ -712,50 +712,43 @@ a templating environment.
 
 ##### Utility Commands
 
-**`$[or $x $y]`**
+- **`$[or $x $y]`**<br>
+  Outputs the value of `$x`, unless it is an empty string, in which case
+  it outputs the value of `$y`.
 
-Outputs the value of `$x`, unless it is an empty string, in which case
-it outputs the value of `$y`.
+- **`$[= $x if {expression}]`**<br>
+  Outputs the value of `$x` if the result of `expression` is
+  [truthy](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_if). The
+  `if {expression}` portion may be omitted, in which case it outputs the
+  value of `$x` directly.
 
-**`$[= $x if {expression}]`**
+- **`$[? {expression} $x $y]`**<br>
+  Outputs the value of `$x` if the result of `expression` is
+  [truthy](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_if),
+  otherwise outputs the value of `$y`.
 
-Outputs the value of `$x` if the result of `expression` is
-[truthy](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_if). The
-`if {expression}` portion may be omitted, in which case it outputs the
-value of `$x` directly.
+- **`$[@ $dict key defaultValue]`**<br>
+  A synonym for [`dict
+  getwithdefault`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_dict).
+  Outputs the dictionary's value for `key`, if it exists. Otherwise,
+  outputs `defaultValue`. `defaultValue` may be omitted, in which case it
+  is an empty string.
 
-**`$[? {expression} $x $y]`**
+- **`$[source path]`**<br>
+  Analogous to [Tcl's
+  `source`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_source). Loads
+  and evaluates the contents of `path`, but outputs nothing. `path` is
+  interpreted in the same way as with [`include`](#path-syntax).
 
-Outputs the value of `$x` if the result of `expression` is
-[truthy](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_if),
-otherwise outputs the value of `$y`.
+- **`$[do code]`**<br>
+  Analogous to [Tcl's
+  `eval`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_eval). Executes
+  `code`, but outputs nothing.
 
-**`$[@ $dict key defaultValue]`**
-
-A synonym for [`dict
-getwithdefault`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_dict).
-Outputs the dictionary's value for `key`, if it exists. Otherwise,
-outputs `defaultValue`. `defaultValue` may be omitted, in which case it
-is an empty string.
-
-**`$[source path]`**
-
-Analogous to [Tcl's
-`source`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_source). Loads
-and evaluates the contents of `path`, but outputs nothing. `path` is
-interpreted in the same way as with [`include`](#path-syntax).
-
-**`$[do code]`**
-
-Analogous to [Tcl's
-`eval`](https://jim.tcl.tk/fossil/doc/trunk/Tcl_shipped.html#_eval). Executes
-`code`, but outputs nothing.
-
-**`$[contentsOf path]`**
-
-Outputs the contents of the file at `path` without processing them in
-any way. `path` is interpreted in the same was as with
-[`include`](#path-syntax).
+- **`$[contentsOf path]`**<br>
+  Outputs the contents of the file at `path` without processing them in
+  any way. `path` is interpreted in the same was as with
+  [`include`](#path-syntax).
 
 
 ##### Aliases
